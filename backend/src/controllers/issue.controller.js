@@ -163,21 +163,30 @@ export const updateIssue = async (req, res) => {
     res.status(500).json({ message: "Failed to update issue" });
   }
 };
-
 /* DELETE ISSUE (ADMIN) */
 export const deleteIssue = async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
     if (!issue) return res.status(404).json({ message: "Issue not found" });
-
+    
     if (issue.picturePublicId) {
       await cloudinary.uploader.destroy(issue.picturePublicId);
     }
-
+    
     await issue.deleteOne();
     res.json({ message: "Issue deleted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to delete issue" });
+  }
+};
+/* ASSIGN ISSUE(LEAD) */
+export const assignIssue = async (req, res) => {
+  try {
+    const issue = await Issue.findById(req.params.id);
+    if (!issue) return res.status(404).json({ message: "Issue not found" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to assign issue" });
   }
 };

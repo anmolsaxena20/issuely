@@ -8,6 +8,7 @@ import rateLimit from "express-rate-limit";
 
 import authRoutes from "./routes/auth.routes.js";
 import issueRoutes from "./routes/issue.routes.js";
+import messageRoutes from "./routes/message.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import { verifyAccessToken } from "./middlewares/auth.middleware.js";
 import { requireAdmin } from "./middlewares/role.middleware.js";
@@ -29,6 +30,7 @@ app.use(passport.initialize());
 /* ---------- ROUTES ---------- */
 app.use("/auth", authRoutes);
 app.use("/issues", verifyAccessToken, issueRoutes);
+app.use("/issues", verifyAccessToken, messageRoutes);
 /* ---------- HEALTH CHECK ---------- */
 app.get("/", (req, res) => {
   res.send("API is running");
