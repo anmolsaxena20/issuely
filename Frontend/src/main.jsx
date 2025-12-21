@@ -8,6 +8,10 @@ import OAuthSuccess from './components/OAuth/OAuth'
 import HomePage from './components/HomePage/HomePage'
 import AboutPage from './Component/About/About'
 import Layout from './components/Layout/Layout'
+import ContactUs from "./Component/Contact/Contact"
+import ProfilePage from "./Component/Profile/Profile"
+import ReportForm from "./Component/ReportForm/ReportForm"
+import  QrScanner  from './Component/QrScanner/QrScanner'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +21,10 @@ const router = createBrowserRouter(
       <Route path='/signup' element={<SignupPage/>}/>
       <Route path='/oauth-success' element={<OAuthSuccess/>}/>    // backend will redirect me to this page then this page will redirect me to login/home page based on success/failure
       <Route path='/about' element={<AboutPage />}/>
+      <Route path='/contact' element={<ContactUs/>}/>
+      <Route path='/profile' element={<ProfilePage />}/>
+      <Route path='/report' element={<ReportForm />}/>
+      <Route path='/qrscanner' element={<QrScanner />}/>
     </Route>
  
   )
