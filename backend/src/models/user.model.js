@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
     },
 
     password: {
+      required: true,
       type: String, // null for OAuth users
     },
 

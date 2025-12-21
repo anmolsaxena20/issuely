@@ -48,7 +48,11 @@ export const refreshAccessToken = async (req, res) => {
 export const signup = async (req, res) => {
   try {
     const { email, password, role, contact } = req.body;
-
+    if (password && password.length < 8) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 8 characters long" });
+    }
     const allowedRoles = ["student", "staff", "lead"];
     if (role && !allowedRoles.includes(role))
       return res.status(400).json({ message: "Invalid role" });
