@@ -12,6 +12,7 @@ import adminRoutes from "./routes/admin.routes.js";
 import { verifyAccessToken } from "./middlewares/auth.middleware.js";
 import { requireAdmin } from "./middlewares/role.middleware.js";
 import errorHandler from "./middlewares/error.middleware.js";
+import passport from "./config/passport.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(helmet());
 app.use(cors({ origin: process.env.CORS_ORIGIN || true, credentials: true }));
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 app.use(limiter);
+app.use(passport.initialize());
 /* ---------- ROUTES ---------- */
 app.use("/auth", authRoutes);
 app.use("/issues", verifyAccessToken, issueRoutes);
