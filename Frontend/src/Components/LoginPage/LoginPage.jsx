@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [loginDetail,setLoginDetail] = useState({
-    userName:"",
+    email:"",
     role:"",
     password:""
   })
@@ -24,7 +24,7 @@ export default function Login() {
   const loginUser = async(e)=>{
     e.preventDefault();
     try {
-      const res  = await fetch("http://localhost:3000/auth/login",
+      const res  = await fetch("http://localhost:5000/auth/login",
       {
         method:"POST",
         headers:{
@@ -36,8 +36,9 @@ export default function Login() {
     const data = await res.json();
 
     if(res.ok){
+      localStorage.setItem("token",data.accessToken)
       setIsLogin(true);
-      setRole('staff')  // res kaise aata hai us basis pe update kar denge
+      setRole(data.role)  // res kaise aata hai us basis pe update kar denge
       navigate("/");
     }else{
       alert("login failed")
@@ -58,15 +59,15 @@ export default function Login() {
 
         {/* Username */}
         <div className="mb-6">
-          <label className="text-sm text-gray-600">Username</label>
+          <label className="text-sm text-gray-600">Email</label>
           <div className="flex items-center border-b border-gray-300 py-2">
             <span className="text-gray-400 mr-2">👤</span>
             <input
               type="text"
-              name="userName"
-              value={loginDetail.userName}
+              name="email"
+              value={loginDetail.email}
               onChange={onChangeDetail}
-              placeholder="Enter your username"
+              placeholder="Enter your Email"
               className="w-full outline-none text-sm text-black"
             />
           </div>

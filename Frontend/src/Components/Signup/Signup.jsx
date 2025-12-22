@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, Link, redirect } from "react-router";
+import { NavLink, Link,useNavigate} from "react-router";
 import {GithubIcon} from "lucide-react"
 
 export default function Signup() {
@@ -14,6 +14,7 @@ export default function Signup() {
     password: ""
   })
 
+  const navigate = useNavigate();
   const onChangeDetail = (e) => {
     setSignupDetail({
       ...signupDetail, [e.target.name]: e.target.value,
@@ -23,7 +24,7 @@ export default function Signup() {
   const SignupUser = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/v1/user/register",
+      const res = await fetch("http://localhost:5000/auth/signup",
         {
           method: "POST",
           headers: {
@@ -34,7 +35,7 @@ export default function Signup() {
       );
       const data = await res.json()
       if (res.ok) {
-        throw redirect("/login")
+        navigate("/login")
       } else {
         alert('signup failed')
       }

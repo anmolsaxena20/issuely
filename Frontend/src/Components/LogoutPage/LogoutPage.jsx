@@ -6,13 +6,14 @@ export default function Logout() {
     const navigate = useNavigate();
     const{setIsLogin} = useAuth();
     const handleLogout = async () => {
-        await fetch("/api/auth/logout", {
+        const token = localStorage.getItem("token");
+        await fetch("/auth/logout", {
             method: "POST",
+            credentials: "include",
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
-
         localStorage.removeItem("token");
         setIsLogin(false);
         navigate("/");
