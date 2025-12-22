@@ -36,8 +36,9 @@ export default function Login() {
     const data = await res.json();
 
     if(res.ok){
+      localStorage.setItem("token",data.accessToken)
       setIsLogin(true);
-      setRole('staff')  // res kaise aata hai us basis pe update kar denge
+      setRole(data.role)  // res kaise aata hai us basis pe update kar denge
       navigate("/");
     }else{
       alert("login failed")
