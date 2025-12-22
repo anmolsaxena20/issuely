@@ -24,7 +24,7 @@ const issueSchema = new mongoose.Schema(
         },
         coordinates: {
           type: [Number], // [lng, lat]
-          required: true,
+          required : true,
         },
       },
     },

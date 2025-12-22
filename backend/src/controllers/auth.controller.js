@@ -138,7 +138,7 @@ export const oauthSuccess = async (req, res) => {
     });
 
     // redirect back to frontend
-    res.redirect("http://localhost:3000/home");
+    res.redirect("http://localhost:5173/");
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "OAuth handling failed" });

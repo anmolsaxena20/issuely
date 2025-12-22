@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket Test</title>
+  </head>
+  <body>
+    <h2>Socket.IO Chat Test</h2>
+
+    <input id="issueId" placeholder="Issue ID" />
+    <input id="message" placeholder="Message" />
+    <button onclick="join()">Join Issue</button>
+    <button onclick="send()">Send</button>
+
+    <ul id="messages"></ul>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+    <script>
+      let socket;
+
+      const ACCESS_TOKEN =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NDgyZTg0YjdjN2Q1MzRmODg4NmRkMSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzY2MzM5MzYxLCJleHAiOjE3NjYzNDAyNjF9.MwE9nw_YK4iBSIUflBBw65nR-eR-hjnnn9SiNR03H58";
+      function join() {
+        socket = io("http://localhost:3000", {
+          auth: { token: ACCESS_TOKEN },
+        });
+
+        socket.emit("join_issue", {
+          issueId: document.getElementById("issueId").value,
+        });
+
+        socket.on("new_message", (msg) => {
+          const li = document.createElement("li");
+          li.innerText = msg.text;
+          document.getElementById("messages").appendChild(li);
+        });
+      }
+
+      function send() {
+        socket.emit("send_message", {
+          issueId: document.getElementById("issueId").value,
+          text: document.getElementById("message").value,
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -168,11 +168,11 @@ export const deleteIssue = async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
     if (!issue) return res.status(404).json({ message: "Issue not found" });
-    
+
     if (issue.picturePublicId) {
       await cloudinary.uploader.destroy(issue.picturePublicId);
     }
-    
+
     await issue.deleteOne();
     res.json({ message: "Issue deleted successfully" });
   } catch (err) {
@@ -185,6 +185,10 @@ export const assignIssue = async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
     if (!issue) return res.status(404).json({ message: "Issue not found" });
+    const { handler } = req.body;
+    issue.assignedTo = handler;
+    await issue.save();
+    res.json(issue);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to assign issue" });
