@@ -47,7 +47,7 @@ export const refreshAccessToken = async (req, res) => {
 
 export const signup = async (req, res) => {
   try {
-    const { email, password, role, contact } = req.body;
+    const { email, password, role, contact, department } = req.body;
     if (password && password.length < 8) {
       return res
         .status(400)
@@ -67,6 +67,7 @@ export const signup = async (req, res) => {
       password: hashedPassword,
       role: role || "student",
       contact: contact,
+      department: department,
     });
 
     res.status(201).json({ message: "Signup successful" });
@@ -94,14 +95,20 @@ export const login = async (req, res) => {
 
     user.refreshToken = refreshToken;
     await user.save();
-
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });
-
-    res.json({ accessToken });
+    const details = {
+      id: user._id,
+      name: user.name,
+      role: user.role,
+      email: user.email,
+      contact: user.contact,
+      department: user.department,
+    };
+    res.json({ token: accessToken, ...details });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Login failed" });

@@ -20,7 +20,10 @@ const userSchema = new mongoose.Schema(
       enum: ["student", "staff", "lead"],
       default: "student",
     },
-
+    department: {
+      type: String,
+      required: true,
+    },
     authProvider: {
       type: String,
       enum: ["local", "google", "github"],
