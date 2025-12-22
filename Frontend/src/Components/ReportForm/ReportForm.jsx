@@ -36,10 +36,10 @@ export default function ReportIssue() {
     formData.append("contact", form.contact);
 
     if (file) {
-      formData.append("attachment", file);
+      formData.append("picture", file);
     }
 
-    const res = await fetch("http://localhost:3000/issues", {
+    const res = await fetch("http://localhost:5000/issues", {
       method: "POST",
       body: formData,
     });
