@@ -36,7 +36,7 @@ export default function Login() {
     const data = await res.json();
 
     if(res.ok){
-      localStorage.setItem("token",data.accessToken)
+      localStorage.setItem("token",data.token)
       setIsLogin(true);
       setRole(data.role)  // res kaise aata hai us basis pe update kar denge
       navigate("/");

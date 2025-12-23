@@ -7,7 +7,7 @@ export default function AssignedIssues() {
   
   useEffect(() => {
    // Backend already returns ONLY assigned issues
-    fetch("/api/staff/issues", {
+    fetch("/issues", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -129,7 +129,7 @@ function IssueCard({ issue ,setIssues}) {
     const updatedIssue = await response.json();
 
    
-    setIssue(updatedIssue);
+    setIssues(updatedIssue);
   } catch (error) {
     console.error("Error updating issue:", error);
     alert("Unable to update issue status");

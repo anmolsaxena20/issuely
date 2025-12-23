@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams ,useNavigate} from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ScanQrCode } from "lucide-react";
 
@@ -12,11 +12,15 @@ export default function ReportIssue() {
     location: "",
     urgency: "Select Urgency",
     contact: "",
+    lat:"",
+    lng:"",
+    status:""
   });
 
   const [file, setFile] = useState(null)
   const [searchParams] = useSearchParams();
   const location = searchParams.get("location");
+  const navigate = useNavigate();
 
 
   const handleChange = (e) => {
@@ -29,23 +33,31 @@ export default function ReportIssue() {
 
     // when we want to send the data in text and file both format then we need to send it in form data
     const formData = new FormData();
+    formData.append("name", form.name);
     formData.append("issueType", form.issueType);
     formData.append("description", form.description);
-    formData.append("location", form.location);
+    formData.append("locationName", form.location);
     formData.append("urgency", form.urgency);
     formData.append("contact", form.contact);
+    formData.append("status",formData.status || "received");
+    formData.append("lat",formData.lat || 1);
+    formData.append("lng",formData.lng||1);
+
 
     if (file) {
       formData.append("picture", file);
     }
-
-    const res = await fetch("http://localhost:5000/issues", {
+    const token = localStorage.getItem('token');
+    const res = await fetch("http://localhost:5000/issues/", {
       method: "POST",
+      headers: { "Authorization": `Bearer ${token}`},
       body: formData,
     });
 
     const data = await res.json();
-    alert(data.message);
+    if(!res.ok) alert(data.message);
+    console.log(data)
+    navigate("");
   };
 
 
