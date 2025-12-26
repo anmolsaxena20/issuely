@@ -4,39 +4,39 @@ import { Link } from "react-router-dom";
 
 ///////////////////////////////Testing*************************************
 
-// const mockStaff = [
-//     { id: "s1", name: "Rahul Sharma", department: "IT" },
-//     { id: "s2", name: "Anjali Verma", department: "Electrical" },
-//     { id: "s3", name: "Amit Kumar", department: "Maintenance" },
-//     { id: "s4", name: "Neha Singh", department: "IT" },
-// ];
+const mockStaff = [
+    { id: "s1", name: "Rahul Sharma", department: "IT" },
+    { id: "s2", name: "Anjali Verma", department: "Electrical" },
+    { id: "s3", name: "Amit Kumar", department: "Maintenance" },
+    { id: "s4", name: "Neha Singh", department: "IT" },
+];
 
-// const mockIssues = [
-//     {
-//         id: "ISS-101",
-//         type: "Projector not working",
-//         location: "Seminar Hall",
-//         priority: "High",
-//         status: "Open",
-//         assignedTo: null,
-//     },
-//     {
-//         id: "ISS-102",
-//         type: "Water leakage",
-//         location: "Block A",
-//         priority: "Medium",
-//         status: "Open",
-//         assignedTo: null,
-//     },
-//     {
-//         id: "ISS-103",
-//         type: "Water leakage",
-//         location: "Library 2nd Floor",
-//         priority: "Medium",
-//         status: "Open",
-//         assignedTo: null,
-//     },
-// ];
+const mockIssues = [
+    {
+        id: "ISS-101",
+        type: "Projector not working",
+        location: "Seminar Hall",
+        priority: "High",
+        status: "Open",
+        assignedTo: null,
+    },
+    {
+        id: "ISS-102",
+        type: "Water leakage",
+        location: "Block A",
+        priority: "Medium",
+        status: "Open",
+        assignedTo: null,
+    },
+    {
+        id: "ISS-103",
+        type: "Water leakage",
+        location: "Library 2nd Floor",
+        priority: "Medium",
+        status: "Open",
+        assignedTo: null,
+    },
+];
 /////////////////////////////////////////////////////////////////
 
 export default function AssignIssuesPage() {
@@ -85,16 +85,16 @@ export default function AssignIssuesPage() {
 
     return (
         <div className="min-h-screen bg-linear-to-br from-indigo-600 to-purple-600 p-6">
-            <div className="flex mb-6">
+            <div className="flex mb-6 border p-4 rounded-lg bg-fuchsia-800">
                 <h1 className="text-3xl font-bold text-white ">
                     Assign Issue
                 </h1>
-                <h3 className=" flex text-fuchsia-400 ml-10 mt-2"><Link to="/admin">Back to Admin Dashboard</Link></h3>
+                <h3 className=" flex text-fuchsia-500 ml-10 mt-2"><Link to="/admin">Back to Admin Dashboard</Link></h3>
             </div>
             <div className="grid grid-cols-2 gap-6 h-fit">
 
                 {/* LEFT – UNASSIGNED ISSUES */}
-                <div className="bg-white rounded-xl p-4 shadow">
+                <div className="bg-emerald-300 rounded-xl p-4 shadow">
                     <h2 className="text-xl font-semibold mb-4">
                         Unassigned Issues
                     </h2>
@@ -119,7 +119,7 @@ export default function AssignIssuesPage() {
                 </div>
 
                 {/* RIGHT – STAFF PANEL */}
-                <div className="bg-white rounded-xl p-4 shadow h-fit">
+                <div className="bg-blue-300 rounded-xl p-4 shadow h-fit">
                     <h2 className="text-xl font-semibold mb-4">
                         Staff List
                     </h2>
@@ -140,9 +140,11 @@ export default function AssignIssuesPage() {
                         onChange={e => setDepartment(e.target.value)}
                     >
                         <option value="">All Departments</option>
-                        <option>IT</option>
-                        <option>Electrical</option>
-                        <option>Maintenance</option>
+                        <option value="Maintenance">Maintainance</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Plumbing">Plumbing</option>
+                        <option value="Sweeper">Sweeper</option>
+                        <option value="IT">IT</option>
                     </select>
 
                     {selectedIssue ? (
@@ -160,7 +162,7 @@ export default function AssignIssuesPage() {
 
                                 <button
                                     onClick={() => assignIssue(s.id)}
-                                    className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+                                    className="bg-green-400 text-white px-3 py-1 rounded hover:bg-green-600 cursor-pointer"
                                 >
                                     Assign
                                 </button>
