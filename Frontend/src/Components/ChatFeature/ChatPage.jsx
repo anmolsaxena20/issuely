@@ -1,88 +1,120 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import useSocket from "../../Context/SocketContext";
-export default function IssueChatPage({currentUserId}) {
-   // const currentUserId = "user123"; // logged-in user
-    const {issueId} = useParams();
-    const{socket} = useSocket();
-   // const issueId = "ISSUE-101";
+import useAuth from "../AuthContext/AuthContextProvider";
+export default function IssueChatPage() {
+    //const currentUserId = "user123"; // logged-in user
+    const { issueId } = useParams();
+    const socket = useSocket();
+    const { user } = useAuth();
+    const currentUserId = user.id;
+    console.log("current userid", currentUserId);
 
-    // useEffect(() => {
-    //     // for joining room
-    //     socket.emit("joinIssue", { issueId });
-    //     // for receiving message
-    //     socket.on("newMessage", (msg) => {
-    //         setMessages((prev) => [...prev, msg]);
-    //     });
-    //     socket.on("messagesSeen", () => {
-    //         setMessages((prev) =>
-    //             prev.map((msg) =>
-    //                 msg.senderId === currentUserId
-    //                     ? { ...msg, status: "seen" }
-    //                     : msg
-    //             )
-    //         );
-    //     });
-    //     // for set all off
-    //     return () => socket.disconnect();
-    //     return () => socket.off("newMessage");
-    //     return ()=>socket.off("messagesSeen")
-    // }, [issueId])
+    // const issueId = "ISSUE-101";
+
+    useEffect(() => {
+        if (!socket) return;
+        // join room
+        socket.emit("join_issue", { issueId });
+
+        // listen for new messages
+        const handleNewMessage = (msg) => {
+            setMessages((prev) => [
+                ...prev,
+                {
+                    id: msg._id,
+                    senderId: String(msg.senderId),
+                    text: msg.text,
+                    time: new Date(msg.createdAt).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                    }),
+                    status: "delivered",
+                },
+            ]);
+            console.log({
+                msgSender: msg.senderId,
+                currentUserId,
+                equal: String(msg.senderId) === String(currentUserId)
+            });
+        };
+
+        socket.on("new_message", handleNewMessage);
+
+        // optional: listen for messagesSeen
+        // const handleMessagesSeen = () => {
+        //   setMessages((prev) =>
+        //     prev.map((msg) =>
+        //       msg.senderId === currentUserId
+        //         ? { ...msg, status: "seen" }
+        //         : msg
+        //     )
+        //   );
+        // };
+        // socket.on("messagesSeen", handleMessagesSeen);
+
+        // cleanup
+        return () => {
+            socket.off("new_message", handleNewMessage);
+            // socket.off("messagesSeen", handleMessagesSeen);
+        };
+    }, [issueId, socket]);
+
 
     const [messages, setMessages] = useState([
-        {
-            id: 1,
-            senderId: "user123",
-            senderName: "You",
-            text: "Hello, any update on this issue?",
-            time: "10:30 AM",
-            status: "seen",
-        },
-        {
-            id: 2,
-            senderId: "staff456",
-            senderName: "Maintenance Staff",
-            text: "Yes, we are checking it right now.",
-            time: "10:32 AM",
-            status: "delivered"
-        },
-        {
-            id: 3,
-            senderId: "user123",
-            senderName: "You",
-            text: "Thanks! Please let me know.",
-            time: "10:33 AM",
-            status: "sent"
-        }
+        // {
+        //     id: 1,
+        //     senderId: user.id,
+        //     senderName: "You",
+        //     text: "Hello, any update on this issue?",
+        //     time: "10:30 AM",
+        //     status: "seen",
+        // },
+        // {
+        //     id: 2,
+        //     senderId: "staff456",
+        //     senderName: "Maintenance Staff",
+        //     text: "Yes, we are checking it right now.",
+        //     time: "10:32 AM",
+        //     status: "delivered"
+        // },
+        // {
+        //     id: 3,
+        //     senderId: "69492424be2a0087c7dc4881",
+        //     senderName: "You",
+        //     text: "Thanks! Please let me know.",
+        //     time: "10:33 AM",
+        //     status: "sent"
+        // }
     ]);
 
     const [input, setInput] = useState("");
 
     const sendMessage = () => {
-        // const data = { issueId: issueId, senderId: currentUserId, receiverId: receiverId, text: input }
-        // socket.emit("sendMessage", data);
-
-        // setInput("");
-
-        ///////////////////////////Testing********************************************
-
-        if (!input.trim()) return;
-
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: Date.now(),
+        if (!input.trim() || !socket) return;
+        const data = {
+            issueId,
             senderId: currentUserId,
-            senderName: "You",
             text: input,
-            time: new Date().toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit"
-            })
-          }
-        ]);
-
+        };
+        socket.emit("send_message", data);
         setInput("");
+
+        ///////////////////////////Testing*******************************************
+
+        // setMessages((prev) => [
+        //     ...prev,
+        //     {
+        //         id: Date.now(),
+        //         senderId: currentUserId,
+        //         text: input,
+        //         time: new Date().toLocaleTimeString([], {
+        //             hour: "2-digit",
+        //             minute: "2-digit"
+        //         })
+        //     }
+        // ]);
+
     };
 
     return (
@@ -104,7 +136,7 @@ export default function IssueChatPage({currentUserId}) {
             {/* CHAT BODY */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {messages.map((msg) => {
-                    const isSender = msg.senderId === currentUserId;
+                    const isSender = String(msg.senderId) === String(currentUserId);
 
                     return (
                         <div

@@ -1,23 +1,27 @@
-import React,{ createContext, useContext, useEffect } from "react";
-import { socket } from "../Socket"
-import useAuth from "../Components/AuthContext/AuthContextProvider";
+import { io } from "socket.io-client";
+import React ,{ createContext, useContext, useEffect, useState } from "react";
 
 const SocketContext = createContext(null);
 
 export const SocketProvider = ({ children }) => {
-  const{user} = useAuth();
-  const userId = user?._id || 1;
-  useEffect(() => {
-    if (userId) {
-      socket.connect();
+  const [socket, setSocket] = useState(null);
 
-      socket.emit("connection", userId); // optional (presence)
-    }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const newSocket = io("http://localhost:5000", {
+      auth: { token },
+      withCredentials: true,
+    });
+
+    setSocket(newSocket);
 
     return () => {
-      socket.disconnect();
+      newSocket.disconnect(); 
     };
-  }, [userId]);
+  }, []);
+
+  if (!socket) return null;
 
   return (
     <SocketContext.Provider value={socket}>
@@ -26,6 +30,6 @@ export const SocketProvider = ({ children }) => {
   );
 };
 
-export default function useSocket (){ 
-  return useContext(SocketContext); 
-} 
+export default function useSocket() {
+  return useContext(SocketContext);
+}
