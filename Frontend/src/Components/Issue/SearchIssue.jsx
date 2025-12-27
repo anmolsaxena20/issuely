@@ -4,14 +4,15 @@ import IssueCard from "./IssueCard";
 
 const mockIssues = [
   {
-    _id: "1",
+    _id: "69492cbf24afbc5118e8b71b",
     description: "Water leakage in Room 204",
     type: "Plumbing",
     location: "Block A - Room 204",
     urgency: "High",
     status: "Closed",
-    assignedTo: null,
+    assignedTo: "694924dcbe2a0087c7dc4886",
     createdAt: "2025-02-20",
+    createdBy:"69492424be2a0087c7dc4881"
   },
   {
     _id: "2",
@@ -36,7 +37,7 @@ const mockIssues = [
 ];
 const mockStaff = [
   {
-    _id: "s1",
+    _id: "694924dcbe2a0087c7dc4886",
     name: "Rahul Sharma",
     role: "Staff",
     department: "Maintenance",
@@ -60,7 +61,7 @@ export default function IssueSearch() {
   const [query, setQuery] = useState("");
   const [reportId, setReportId] = useState("");
   const [isSearch, setIsSearch] = useState(false);
-  const[issues,setIssues] = useState();
+  const[issues,setIssues] = useState(mockIssues);
   const[filteredIssue,setFilteredIssue] =useState() ;
   const[staff,setStaff] = useState(mockStaff);
 
@@ -74,10 +75,10 @@ export default function IssueSearch() {
     setFilteredIssue(filtered);
     setIsSearch(true);
   };
-  const handleId = async()=>{}
-  useEffect(()=>{
-    setIssues(mockIssues);
-  },[])
+  // useEffect(async()=>{
+  //   //await fetch("http://localhost:5000/issues").then(res=>res.json()).then(data=>console.log("fetched date",data))
+  //   setIssues(mockIssues);
+  // },[])
   return (
     <div className="p-6 h-fit w-screen  bg-linear-to-br from-cyan-400 via-purple-500 to-pink-500 text-white">
       <div className="flex gap-2 mb-4">

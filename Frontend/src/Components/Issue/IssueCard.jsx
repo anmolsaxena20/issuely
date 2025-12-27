@@ -121,8 +121,8 @@ export default function IssueCard({ issue, setIssues, staff }) {
                     }
                 </>
             }
-            {(role=="student" || role=="staff") && isLogin && 
-            <Link to ={`/issues/:${issue._id}/chat`}>
+            {(role=="student" || role=="staff") && (isLogin && (issue.createdBy==user.id || issue.assignedTo==user.id))&& 
+            <Link to ={`/issues/${issue._id}/chat`}>
                 chat on this issue
             </Link>}
             {(role == "student" && (isLogin && (issue.status == 'Closed' || issue.status == 'Resolved'))) &&
