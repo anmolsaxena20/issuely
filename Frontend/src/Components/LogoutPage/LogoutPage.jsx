@@ -7,13 +7,14 @@ export default function Logout() {
     const{setIsLogin} = useAuth();
     const handleLogout = async () => {
         const token = localStorage.getItem("token");
-        await fetch("/auth/logout", {
+        const res = await fetch("http://localhost:5000/auth/logout", {
             method: "POST",
             credentials: "include",
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
+        if(!res.ok) throw new Error("unable to logout");
         localStorage.removeItem("token");
         setIsLogin(false);
         navigate("/");
@@ -23,7 +24,7 @@ export default function Logout() {
     return (
         <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition cursor-pointer"
+            className="px-4 py-2 bg-linear-to-t from--100  to-pink-900  hover:bg-fuchsia-400 hover:rounded-2xl rounded   cursor-pointer"
         >
             Logout
         </button>

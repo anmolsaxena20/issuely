@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { NavLink, Link,useNavigate} from "react-router";
-import {GithubIcon} from "lucide-react"
+import {GithubIcon, CircleUserRound} from "lucide-react"
 
 export default function Signup() {
   const [signupDetail, setSignupDetail] = useState({
 
-    userName: "",
-    fullName: "",
+    name: "",
     email: "",
     role: "",
     department: "",
@@ -20,7 +19,7 @@ export default function Signup() {
     setSignupDetail({
       ...signupDetail, [e.target.name]: e.target.value,
     })
-    setRole(e.target.value);
+    if(e.target.name=='role') setRole(e.target.value);
   }
 
   const SignupUser = async (e) => {
@@ -53,20 +52,20 @@ export default function Signup() {
 
         {/*Full name */}
         <div className="mb-6">
-          <label className="text-sm text-gray-600">Full Name</label>
+          {/* <label className="text-sm text-gray-600">Full Name</label> */}
           <div className="flex items-center border-b border-gray-300 py-2">
             <span className="text-gray-400 mr-2">👤</span>
             <input
               type="text"
-              name="fullName"
-              value={signupDetail.fullName}
+              name="name"
+              value={signupDetail.name}
               onChange={onChangeDetail}
-              placeholder="Enter your full name"
+              placeholder="Enter your  name"
               className="w-full outline-none text-sm text-black"
             />
           </div>
         </div>
-        {/* Username */}
+        {/* Username
         <div className="mb-6">
           <label className="text-sm text-gray-600">Username</label>
           <div className="flex items-center border-b border-gray-300 py-2">
@@ -80,7 +79,7 @@ export default function Signup() {
               className="w-full outline-none text-sm text-black"
             />
           </div>
-        </div>
+        </div> */}
 
         {/*Email */}
 
@@ -121,7 +120,7 @@ export default function Signup() {
           className="w-full p-2 mb-4 rounded"
         >
           <option value="">Select Department</option>
-          {role=='student' && (
+          {(role=='student' || role =='lead') && (
           <>
           <option value="ECE">ECE</option>
           <option value="CSE">CSE</option>
