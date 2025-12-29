@@ -73,7 +73,7 @@ export const getMyIssues = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch issues" });
   }
 };
-export const getAssingedIssues = async (req, res) => {
+export const getAssignedIssues = async (req, res) => {
   try {
     const issues = await Issue.find({ assignedTo: req.user.id }).sort({
       createdAt: -1,

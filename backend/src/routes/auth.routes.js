@@ -16,7 +16,7 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.post("/refresh", refreshAccessToken);
 router.post("/logout", verifyAccessToken, logout);
-routes.post("/update", verifyAccessToken, update);
+router.post("/update", verifyAccessToken, update);
 /* GOOGLE */
 router.get(
   "/google",
