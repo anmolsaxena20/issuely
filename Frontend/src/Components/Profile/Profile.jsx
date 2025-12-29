@@ -1,45 +1,26 @@
 import React,{ useState, useEffect } from "react";
-
+import useAuth from "../AuthContext/AuthContextProvider"
 export default function ProfilePage() {
   const [profile, setProfile] = useState({
-    userName: "",
-    fullName: "",
+    name: "",
     email: "",
     contact: "",
     role: "",
     department: "",
-    // userName:"Gaurav",
-    // fullName:"Gaurav Dubey",
-    // email:"g@gmail.com",
-    // contact:"+91944",
-    // role:"Student",
-    // department:"Ece"
+    password:""
   });
-
-
-  const [loading, setLoading] = useState(false)
+  const{user,isLogin} = useAuth();
+  const [loading, setLoading] = useState(true)
 
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await fetch("/api/profile", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-
-
-        const data = await res.json();
-        setProfile(data); // backend decides which fields exist
-      } catch (err) {
-        console.error("Failed to load profile", err);
-      } finally {
+    const fetchProfile =  () => {
+      if(isLogin) {
+        console.log("user data in profile page",user);
+        setProfile(user);
         setLoading(false);
       }
     };
-
-
     fetchProfile();
   }, []);
   const handleChange = (e) => {
@@ -49,7 +30,7 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-white">
+      <div className="min-h-screen flex items-center justify-center text-black ">
         Loading profile...
       </div>
     );
@@ -61,23 +42,17 @@ export default function ProfilePage() {
         <h2 className="text-2xl font-bold text-center mb-8">Profile</h2>
 
 
-        {profile.userName && (
-          <Field icon="👤" label="Username" value={profile.userName} onChange={handleChange} name="userName" />
+        {profile.name && (
+          <Field icon="👤" label="name" value={profile?.name} onChange={handleChange} name="name" />
         )}
-
-
-        {profile.fullName && (
-          <Field icon="📝" label="Full Name" value={profile.fullName} onChange={handleChange} name="fullName" />
-        )}
-
 
         {profile.email && (
-          <Field icon="📧" label="Email" value={profile.email} onChange={handleChange} name="email" />
+          <Field icon="📧" label="Email" value={profile?.email} onChange={handleChange} name="email" />
         )}
 
 
         {profile.contact && (
-          <Field icon="📞" label="Contact" value={profile.contact} onChange={handleChange} name="contact" />
+          <Field icon="📞" label="Contact" value={profile?.contact} onChange={handleChange} name="contact" />
         )}
 
 
@@ -85,7 +60,7 @@ export default function ProfilePage() {
           <label className="text-sm text-gray-600">Role</label>
           <div className="flex items-center border-b border-gray-300 py-2">
             <span className="text-gray-400 mr-2">🎓</span>
-            <span className="text-sm">{profile.role}</span>
+            <span className="text-sm">{profile?.role}</span>
           </div>
         </div>
 
@@ -95,9 +70,12 @@ export default function ProfilePage() {
             <label className="text-sm text-gray-600">Department</label>
             <div className="flex items-center border-b border-gray-300 py-2">
               <span className="text-gray-400 mr-2">🏢</span>
-              <span className="text-sm">{profile.department}</span>
+              <span className="text-sm">{profile?.department}</span>
             </div>
           </div>
+        )}
+         {profile.password && (
+          <Field icon="📞" label="Contact" value={profile?.password} onChange={handleChange} name="password" />
         )}
       </div>
     </div>
