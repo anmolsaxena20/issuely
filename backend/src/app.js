@@ -9,9 +9,12 @@ import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/auth.routes.js";
 import issueRoutes from "./routes/issue.routes.js";
 import messageRoutes from "./routes/message.routes.js";
-import adminRoutes from "./routes/admin.routes.js";
 import { verifyAccessToken } from "./middlewares/auth.middleware.js";
-import { requireAdmin } from "./middlewares/role.middleware.js";
+import {
+  requireLead,
+  requireStudent,
+  requireStaff,
+} from "./middlewares/role.middleware.js";
 import errorHandler from "./middlewares/error.middleware.js";
 import passport from "./config/passport.js";
 
@@ -31,6 +34,9 @@ app.use(passport.initialize());
 app.use("/auth", authRoutes);
 app.use("/issues", verifyAccessToken, issueRoutes);
 app.use("/issues", verifyAccessToken, messageRoutes);
+app.use("/lead", verifyAccessToken, requireLead, messageRoutes);
+app.use("/student", verifyAccessToken, requireStudent, messageRoutes);
+app.use("/staff", verifyAccessToken, requireStaff, messageRoutes);
 
 /* ---------- HEALTH CHECK ---------- */
 app.get("/", (req, res) => {
