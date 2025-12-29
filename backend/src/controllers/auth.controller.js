@@ -81,26 +81,22 @@ export const signup = async (req, res) => {
 export const update = async (req, res) => {
   try {
     const { id, name, email, password, role, contact, department } = req.body;
-    if (password && password.length < 8) {
-      return res
-        .status(400)
-        .json({ message: "Password must be at least 8 characters long" });
-    }
-    const allowedRoles = ["student", "staff", "lead"];
-    if (role && !allowedRoles.includes(role))
-      return res.status(400).json({ message: "Invalid role" });
-    const hashedPassword = await hashPassword(password);
-    const user = await User.updateOne(
-      { _id: id },
-      {
-        name,
-        email,
-        password: hashedPassword,
-        role: role || "student",
-        contact: contact,
-        department: department,
+    let updateData = {
+      name,
+      email,
+      role: role || "student",
+      contact: contact,
+      department: department,
+    };
+    if (password) {
+      if (password.length < 8) {
+        return res
+          .status(400)
+          .json({ message: "Password must be at least 8 characters long" });
       }
-    );
+      updateData.password = await hashPassword(password);
+    }
+    await User.updateOne({ _id: id }, updateData);
 
     res.status(200).json({ message: "Update successful" });
   } catch (err) {
