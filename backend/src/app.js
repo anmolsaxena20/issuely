@@ -9,6 +9,9 @@ import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/auth.routes.js";
 import issueRoutes from "./routes/issue.routes.js";
 import messageRoutes from "./routes/message.routes.js";
+import leadRoutes from "./routes/lead.routes.js";
+import studentRoutes from "./routes/student.routes.js";
+import staffRoutes from "./routes/staff.routes.js";
 import { verifyAccessToken } from "./middlewares/auth.middleware.js";
 import {
   requireLead,
@@ -34,9 +37,9 @@ app.use(passport.initialize());
 app.use("/auth", authRoutes);
 app.use("/issues", verifyAccessToken, issueRoutes);
 app.use("/issues", verifyAccessToken, messageRoutes);
-app.use("/lead", verifyAccessToken, requireLead, messageRoutes);
-app.use("/student", verifyAccessToken, requireStudent, messageRoutes);
-app.use("/staff", verifyAccessToken, requireStaff, messageRoutes);
+app.use("/lead", verifyAccessToken, requireLead, leadRoutes);
+app.use("/student", verifyAccessToken, requireStudent, studentRoutes);
+app.use("/staff", verifyAccessToken, requireStaff, staffRoutes);
 
 /* ---------- HEALTH CHECK ---------- */
 app.get("/", (req, res) => {
