@@ -31,5 +31,5 @@ router.get("/staff/my", requireStaff, getAssignedIssues);
 router.get("/lead/getall", requireLead, getAllIssues);
 router.get("/lead/update", requireLead, updateIssue);
 router.get("/lead/delete", requireLead, deleteIssue);
-router.get("/lead/assign", requireLead, assignIssue);
+router.post("/lead/assign", requireLead, assignIssue);
 export default router;
