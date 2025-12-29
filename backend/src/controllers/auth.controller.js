@@ -47,7 +47,7 @@ export const refreshAccessToken = async (req, res) => {
 
 export const signup = async (req, res) => {
   try {
-    const { username, email, password, role, contact, department } = req.body;
+    const { name, email, password, role, contact, department } = req.body;
     if (password && password.length < 8) {
       return res
         .status(400)
@@ -63,7 +63,7 @@ export const signup = async (req, res) => {
     const hashedPassword = await hashPassword(password);
 
     const user = await User.create({
-      username,
+      name,
       email,
       password: hashedPassword,
       role: role || "student",
@@ -103,7 +103,7 @@ export const login = async (req, res) => {
     });
     const details = {
       id: user._id,
-      name: user.username,
+      name: user.name,
       role: user.role,
       email: user.email,
       contact: user.contact,
