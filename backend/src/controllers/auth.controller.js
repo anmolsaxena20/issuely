@@ -78,6 +78,36 @@ export const signup = async (req, res) => {
   }
 };
 
+export const update = async (req, res) => {
+  try {
+    const { id, name, email, password, role, contact, department } = req.body;
+    if (password && password.length < 8) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 8 characters long" });
+    }
+    const allowedRoles = ["student", "staff", "lead"];
+    if (role && !allowedRoles.includes(role))
+      return res.status(400).json({ message: "Invalid role" });
+    const hashedPassword = await hashPassword(password);
+    const user = await User.updateOne(
+      { _id: id },
+      {
+        name,
+        email,
+        password: hashedPassword,
+        role: role || "student",
+        contact: contact,
+        department: department,
+      }
+    );
+
+    res.status(200).json({ message: "Update successful" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to update routes" });
+  }
+};
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -125,7 +155,6 @@ export const logout = async (req, res) => {
     res.status(500).json({ message: "Logout failed" });
   }
 };
-
 /* OAUTH SUCCESS HANDLER */
 export const oauthSuccess = async (req, res) => {
   try {
