@@ -22,6 +22,7 @@ const router = express.Router();
 /* STUDENT */
 router.post("/student/", requireStudent, upload.single("picture"), createIssue);
 router.get("/student/my", requireStudent, getMyIssues);
+router.get("/student/:id", requireStudent, getIssueById);
 
 /*STAFF*/
 router.get("/staff/my", requireStaff, getAssignedIssues);
