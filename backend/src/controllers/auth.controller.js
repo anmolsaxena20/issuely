@@ -172,6 +172,7 @@ export const login = async (req, res) => {
       email: user.email,
       contact: user.contact,
       department: user.department,
+      picture: user.picture,
     };
     res.json({ token: accessToken, ...details });
   } catch (err) {
