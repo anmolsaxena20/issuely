@@ -1,4 +1,4 @@
-import "dotenv/config.js";
+import "dotenv/config";
 
 import express from "express";
 import cookieParser from "cookie-parser";
@@ -34,6 +34,7 @@ app.use(cors({ origin: process.env.CORS_ORIGIN || true, credentials: true }));
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 app.use(limiter);
 app.use(passport.initialize());
+
 /* ---------- ROUTES ---------- */
 app.use("/auth", authRoutes);
 app.use("/issues", verifyAccessToken, issueRoutes);

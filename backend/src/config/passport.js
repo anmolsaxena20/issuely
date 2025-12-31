@@ -17,9 +17,10 @@ passport.use(
 
         if (!user) {
           user = await User.create({
+            name: profile.displayName || profile.username,
             email: profile.emails[0].value,
             googleId: profile.id,
-            profilePicURL: profile.photos?.[0]?.value,
+            picture: profile.photos?.[0]?.value,
             authProvider: "google",
           });
         }
@@ -46,10 +47,11 @@ passport.use(
 
         if (!user) {
           user = await User.create({
+            name: profile.displayName || profile.username,
             email:
               profile.emails?.[0]?.value || `${profile.username}@github.com`,
             githubId: profile.id,
-            profilePicURL: profile.photos?.[0]?.value,
+            picture: profile.photos?.[0]?.value,
             authProvider: "github",
           });
         }

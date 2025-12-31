@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 import jwt from "jsonwebtoken";
 import Issue from "../models/issue.model.js";
 import Message from "../models/message.model.js";
+import "dotenv/config";
 
 export const initSocket = (server) => {
   const io = new Server(server, {
