@@ -9,7 +9,7 @@ export default function ProfilePage() {
     department: "",
     password: ""
   });
-  const { user, isLogin ,setUser} = useAuth();
+  const { user, isLogin, setUser } = useAuth();
   const [loading, setLoading] = useState(true)
   const [isUpdate, setUpdate] = useState(false);
 
@@ -36,7 +36,7 @@ export default function ProfilePage() {
   const updateProfile = async (e) => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    const data = { id: user.id, name:profile.name, email:profile.email, password:profile.password, role:profile.role, contact:profile.contact, department:profile.department }
+    const data = { id: user.id, name: profile.name, email: profile.email, password: profile.password, role: profile.role, contact: profile.contact, department: profile.department }
     try {
       const res = await fetch("http://localhost:5000/auth/update",
         {
@@ -70,16 +70,22 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen w-screen flex items-center justify-center bg-linear-to-br from-cyan-400 via-purple-500 to-pink-500">
-      <div className="bg-white w-105 rounded-xl shadow-2xl px-8 py-10">
+      <div className="bg-violet-400 w-105 rounded-xl shadow-2xl px-8 py-10">
         <h2 className="text-2xl font-bold text-center mb-8">Profile</h2>
 
-
+        <div className="w-36 h-36 rounded-full overflow-hidden bg-gray-200 mb-4 mx-auto">
+    <img
+      src={user.picture}
+      alt="Profile"
+      className="w-full h-full object-cover"
+    />
+  </div>
         {profile.name && (
           <Field icon="👤" label="name" value={profile?.name} onChange={handleChange} name="name" editable={isUpdate} />
         )}
 
         {profile.email && (
-          <Field icon="📧" label="Email" value={profile?.email} onChange={handleChange} name="email" editable={isUpdate}/>
+          <Field icon="📧" label="Email" value={profile?.email} onChange={handleChange} name="email" editable={isUpdate} />
         )}
 
 
