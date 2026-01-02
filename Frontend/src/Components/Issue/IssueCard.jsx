@@ -45,7 +45,7 @@ export default function IssueCard({ issue, setIssues, staff }) {
    if(!Array.isArray(staff)){
     filteredStaff = staff
    }else  {
-    filteredStaff = staff.find(s => s._id == issue.assignedTo);
+    filteredStaff = staff.find(s => s._id?s._id:s.id == issue.assignedTo);
    }
    console.log("filteredStaff",filteredStaff)
 
@@ -85,7 +85,7 @@ export default function IssueCard({ issue, setIssues, staff }) {
                 {issue.priority}
             </span>
 
-            {(role != "student" && (isLogin && ((issue.assignedTo!=null)&& (issue.assignedTo==user.id  || role=="lead")))) &&
+            {(role != "student" && (isLogin && ((issue.assignedTo!=null)&& (issue.assignedTo==user.id?user.id:user._id  || role=="lead")))) &&
                 <>
                     <div>
                         <button
@@ -118,7 +118,7 @@ export default function IssueCard({ issue, setIssues, staff }) {
                 </>
             }
             <div>
-            {(role=="student" || role=="staff") && (isLogin && (issue.createdBy._id==user.id || issue.assignedTo==user.id))&& 
+            {(role=="student" || role=="staff") && (isLogin && (issue.createdBy==user.id?user.id:user._id || issue.assignedTo==user.id?user.id:user._id))&& 
             <Link to ={`/issues/${issue._id}/chat`}>
                 chat on this issue
             </Link>}
