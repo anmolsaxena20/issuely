@@ -10,6 +10,7 @@ export default function AssignedIssues() {
   useEffect(() => {
     const fetchIssue = async()=>{
       const token = localStorage.getItem("token");
+      console.log("token",token);
       if(!token) return;
       try {
       const res = await fetch(`http://localhost:5000/issues/staff/my`,
@@ -24,7 +25,7 @@ export default function AssignedIssues() {
         if(!res.ok)  throw new Error(`Error ${res.status}: ${res.statusText}`);
         const fetchedIssues = await res.json();
         console.log("all issues",fetchedIssues);
-        const filterIssue = fetchedIssues.filter(issue=>issue.assignedTo==user.id)
+        const filterIssue = fetchedIssues.filter(issue=>issue.assignedTo==user.id?user.id:user._id)
         console.log("filter issue in assign issue",filterIssue)
         setIssues(filterIssue);
       } catch (error) {
@@ -32,7 +33,7 @@ export default function AssignedIssues() {
       }
     }
     fetchIssue()
-  }, []);
+  }, [user]);
   const filteredIssues = issues.filter(issue =>
     (!filters.urgency || issue.urgency === filters.urgency) &&
     (!filters.status || issue.status === filters.status) &&
