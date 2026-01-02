@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useAuth from "../AuthContext/AuthContextProvider"
+import { Pencil } from "lucide-react";
 export default function ProfilePage() {
   const [profile, setProfile] = useState({
     name: "",
@@ -7,11 +8,45 @@ export default function ProfilePage() {
     contact: "",
     role: "",
     department: "",
-    password: ""
+    picture: ""
   });
   const { user, isLogin, setUser } = useAuth();
   const [loading, setLoading] = useState(true)
   const [isUpdate, setUpdate] = useState(false);
+ const fileRef = useRef(null);
+
+
+ const handleIconClick = ()=>{
+  fileRef.current.click();
+ }
+
+  const updateProfilePicture = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("picture", file);
+    formData.append("id", user._id?user._id:user.id)
+    console.log("formData",formData)
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    try {
+      const res = await fetch("http://localhost:5000/auth/update",
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      )
+      if (!res.ok) throw new Error(`Error:${res.status}:${res.statusText}`)
+      const data = await res.json();
+      console.log("updated user after picture", data)
+      setProfile((prev) => ({ ...prev, picture: data.picture }))
+    } catch (error) {
+      console.log("Error in changing the profile picture", error)
+    }
+  }
 
 
   useEffect(() => {
@@ -23,7 +58,7 @@ export default function ProfilePage() {
       }
     };
     fetchProfile();
-  }, []);
+  }, [user]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -36,7 +71,7 @@ export default function ProfilePage() {
   const updateProfile = async (e) => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    const data = { id: user.id, name: profile.name, email: profile.email, password: profile.password, role: profile.role, contact: profile.contact, department: profile.department }
+    const data = { id: user.id ? user.id : user._id, name: profile.name, email: profile.email, role: profile.role, contact: profile.contact, department: profile.department }
     try {
       const res = await fetch("http://localhost:5000/auth/update",
         {
@@ -72,14 +107,22 @@ export default function ProfilePage() {
     <div className="min-h-screen w-screen flex items-center justify-center bg-linear-to-br from-cyan-400 via-purple-500 to-pink-500">
       <div className="bg-violet-400 w-105 rounded-xl shadow-2xl px-8 py-10">
         <h2 className="text-2xl font-bold text-center mb-8">Profile</h2>
+    <div className="relative w-36 h-36 mx-auto mb-4">
+        <div className="w-36 h-36 rounded-full overflow-hidden bg-gray-200 ">
+          <img
+            src={profile.picture}
+            alt="Profile"
+            className="w-full h-full object-cover"
+          />
+         <button onClick={handleIconClick}
+         className="absolute bottom-1 right-1 bg-indigo-600 text-white p-2 rounded-full shadow hover:bg-indigo-700 transition cursor-pointer"
 
-        <div className="w-36 h-36 rounded-full overflow-hidden bg-gray-200 mb-4 mx-auto">
-    <img
-      src={user.picture}
-      alt="Profile"
-      className="w-full h-full object-cover"
-    />
-  </div>
+         >
+          <Pencil size = {16}/>
+         </button>
+         <input type="file" ref = {fileRef} accept="image/*" hidden onChange={updateProfilePicture}/>
+         </div>
+        </div>
         {profile.name && (
           <Field icon="👤" label="name" value={profile?.name} onChange={handleChange} name="name" editable={isUpdate} />
         )}
