@@ -1,22 +1,22 @@
 import { Server } from "socket.io";
+import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import Issue from "../models/issue.model.js";
 import Message from "../models/message.model.js";
 import "dotenv/config";
-
+import { setSocketInstance } from "../utils/socket.instance.js";
 export const initSocket = (server) => {
   const io = new Server(server, {
     cors: { origin: process.env.CORS_ORIGIN.split(","), credentials: true },
   });
 
   // Socket authentication
-  io.use((socket, next) => {
+  io.use(async (socket, next) => {
     try {
       const token = socket.handshake.auth?.token;
       if (!token) throw new Error("No token");
 
       const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-
       socket.user = decoded;
       next();
     } catch {
@@ -25,6 +25,9 @@ export const initSocket = (server) => {
   });
 
   io.on("connection", (socket) => {
+    if (socket.user.role === "lead") {
+      socket.join("room:lead");
+    }
     /* JOIN ISSUE CHAT */
     socket.on("join_issue", async ({ issueId }) => {
       const issue = await Issue.findById(issueId);
@@ -68,6 +71,6 @@ export const initSocket = (server) => {
 
     socket.on("disconnect", () => {});
   });
-
+  setSocketInstance(io);
   return io;
 };

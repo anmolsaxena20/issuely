@@ -3,7 +3,7 @@ import http from "http";
 import mongoose from "mongoose";
 
 import app from "./src/app.js";
-import { initSocket } from "./src/socket/issue.socket.js";
+import { initSocket } from "./src/socket/socket.js";
 
 const PORT = process.env.PORT || 3000;
 

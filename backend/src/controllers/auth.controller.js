@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import RoleRequest from "../models/roleRequest.model.js";
 import { hashPassword, comparePassword } from "../utils/hash.util.js";
 import {
   generateAccessToken,
@@ -7,7 +8,8 @@ import {
 import jwt from "jsonwebtoken";
 import cloudinary from "../config/cloudinary.js";
 import streamifier from "streamifier";
-
+import "dotenv/config";
+import { getSocketInstance } from "../utils/socket.instance.js";
 export const refreshAccessToken = async (req, res) => {
   try {
     const token = req.cookies.refreshToken;
@@ -63,7 +65,28 @@ export const signup = async (req, res) => {
     if (existingUser) return res.status(409).json({ message: "User exists" });
 
     const hashedPassword = await hashPassword(password);
-
+    if (role === "staff" || role === "lead") {
+      const existing = await RoleRequest.findOne({ email });
+      if (existing) return res.redirect("http://localhost:5173/wait");
+      const io = getSocketInstance();
+      const data = JSON.stringify({
+        name,
+        role,
+        department,
+        contact,
+        password: hashedPassword,
+      });
+      const requester = await RoleRequest.create({ email, data });
+      io.to("room:lead").emit("new_request", {
+        id: requester._id,
+        name,
+        email,
+        role,
+        department,
+        contact,
+      });
+      return res.redirect("http://localhost:5173/wait");
+    }
     const user = await User.create({
       name,
       email,
