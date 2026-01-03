@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import RoleRequest from "../models/roleRequest.model.js";
+import { sendEmail } from "../utils/mailer.js";
 export const getAllStaff = async (req, res) => {
   try {
     const staff = await User.find({ role: "staff" }, { password: 0 });
@@ -44,7 +45,12 @@ export const acceptSignup = async (req, res) => {
       contact: parsed.contact,
       department: parsed.department,
     });
-
+    await sendEmail({
+      to: request.email,
+      subject: "Signup Request Accepted",
+      html: "",
+      text: `Welcome to Issuely .Your signup request as a ${parsed.role} has been accepted by a lead. `,
+    });
     res.json({ message: "Signup approved successfully" });
   } catch (err) {
     console.error(err);
@@ -64,6 +70,12 @@ export const rejectSignup = async (req, res) => {
       });
     }
 
+    await sendEmail({
+      to: request.email,
+      subject: "Signup Request Rejected",
+      html: "",
+      text: `Sorry to inform you that your request as a ${parsed.role} has been rejected by a lead`,
+    });
     res.json({ message: "Signup request rejected" });
   } catch (err) {
     console.error(err);
