@@ -2,7 +2,7 @@ import React from "react";
 import  {Link, NavLink } from "react-router-dom"
 export default function Footer() {
   return (
-    <footer className="bg-linear-to-r from-cyan-600 via-purple-600 to-pink-600 text-white w-screen">
+    <footer className="bg-[#112a2f] border-t border-[#16B4C6]/20 text-gray-400  w-screen">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* College Info */}
         <div>

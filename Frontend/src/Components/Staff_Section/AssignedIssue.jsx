@@ -69,10 +69,10 @@ function IssueFilters({ filters, setFilters }) {
           setFilters({ ...filters, urgency: e.target.value })
         }
       >
-        <option value="">All Priorities</option>
-        <option value = "high">High</option>
-        <option value ="medium">Medium</option>
-        <option value ="low">Low</option>
+        <option value="" className="bg-gray-800 text-amber-800">All Priorities</option>
+        <option value = "high" className="bg-gray-800 text-amber-800">High</option>
+        <option value ="medium" className="bg-gray-800 text-amber-800">Medium</option>
+        <option value ="low" className="bg-gray-800 text-amber-800">Low</option>
       </select>
 
       <select
@@ -81,16 +81,16 @@ function IssueFilters({ filters, setFilters }) {
           setFilters({ ...filters, status: e.target.value })
         }
       >
-        <option value="">All Status</option>
-        <option value = "received">Received</option>
-        <option value = "assigned">Assigned</option>
-        <option value= "in-preogress">In Progress</option>
-        <option value ="resolved">Resolved</option>
+        <option value="" className="bg-gray-800 text-amber-800">All Status</option>
+        <option value = "received" className="bg-gray-800 text-amber-800">Received</option>
+        <option value = "assigned" className="bg-gray-800 text-amber-800">Assigned</option>
+        <option value= "in-preogress" className="bg-gray-800 text-amber-800">In Progress</option>
+        <option value ="resolved" className="bg-gray-800 text-amber-800">Resolved</option>
       </select>
       <input
         type="text"
         placeholder="Search by location"
-        className="border p-2 rounded"
+        className="border p-2 rounded text-amber-800"
         value={filters.location}
         onChange={(e) => setFilters({ ...filters, location: e.target.value })}
 

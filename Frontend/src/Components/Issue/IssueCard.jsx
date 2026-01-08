@@ -51,11 +51,11 @@ export default function IssueCard({ issue, setIssues, staff }) {
 
     return (
         <div
-            className="bg-blue-300 p-4 rounded-xl shadow hover:shadow-2xl transition h-fit"
+            className="bg-[#0F1A1C] border border-[#16B4C6]/20 p-4 rounded-xl shadow hover:shadow-2xl transition h-fit"
         >
             <div className="flex justify-between">
                 <h3 className="font-semibold text-blue-600">
-                    ID:{issue._id}
+                    ID:<span className="text-pink-500">{issue._id}</span>
                 </h3>
                 <StatusBadge status={issue.status} />
             </div>

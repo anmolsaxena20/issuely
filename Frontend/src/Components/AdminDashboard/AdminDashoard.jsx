@@ -65,8 +65,8 @@ export default function AdminDashboard() {
     );
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-indigo-600 to-purple-600 p-6">
-            <div className="flex mb-6">
+        <div className="min-h-screen bg-linear-to-b from-[#011119] via-[#0f2a2f] to-[#0e6f7a] p-6">
+            <div className="flex  mb-6">
             <h1 className="text-3xl font-bold text-white ">
                 Admin Dashboard
             </h1>
@@ -92,17 +92,17 @@ export default function AdminDashboard() {
 
 function IssueFilters({ filters, setFilters }) {
   return (
-    <div className="bg-indigo-400 p-4 rounded-xl shadow flex gap-4 flex-wrap">
+    <div className="bg-linear-to-b from-[#15242b] via-[#106270] to-[#0e6f7a] p-4 rounded-xl shadow flex gap-4 flex-wrap">
       <select
         className="border p-2 rounded"
         onChange={e =>
           setFilters({ ...filters, priority: e.target.value })
         }
       >
-        <option value="">All Priorities</option>
-        <option value = "high">High</option>
-        <option value="meduim">Medium</option>
-        <option value ="low">Low</option>
+        <option value="" className="bg-gray-800 text-amber-800">All Priorities</option>
+        <option value = "high" className="bg-gray-800 text-amber-800">High</option>
+        <option value="meduim" className="bg-gray-800 text-amber-800">Medium</option>
+        <option value ="low" className="bg-gray-800 text-amber-800">Low</option>
       </select>
 
       <select
@@ -111,16 +111,16 @@ function IssueFilters({ filters, setFilters }) {
           setFilters({ ...filters, status: e.target.value })
         }
       >
-        <option value="">All Status</option>
-        <option value= "received">Received</option>
-        <option value = "assigned">Assigned</option>
-        <option value = "in-progress">In Progress</option>
-        <option value = "resolved">Resolved</option>
+        <option value="" className="bg-gray-800 text-amber-800">All Status</option>
+        <option value= "received" className="bg-gray-800 text-amber-800">Received</option>
+        <option value = "assigned" className="bg-gray-800 text-amber-800">Assigned</option>
+        <option value = "in-progress" className="bg-gray-800 text-amber-800">In Progress</option>
+        <option value = "resolved" className="bg-gray-800 text-amber-800">Resolved</option>
       </select>
       <input
         type="text"
-        placeholder="Search by location"
-        className="border p-2 rounded"
+        placeholder="Search by location "
+        className="border p-2 rounded "
         value={filters.location}
         onChange={(e) => setFilters({ ...filters, location: e.target.value })}
 

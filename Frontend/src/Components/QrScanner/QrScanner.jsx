@@ -28,13 +28,13 @@ export default function QrScanner() {
 
 
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center bg-linear-to-br from-cyan-400 via-purple-500 to-pink-500 text-black">
+    <div className="min-h-screen w-screen flex items-center justify-center bg-linear-to-b from-[#011119] via-[#0f2a2f] to-[#0e6f7a] text-black">
       <div className="bg-blue-300 p-6 rounded-xl w-87.5">
-        <h2 className="text-xl font-semibold text-center mb-4">
+        <h2 className="text-xl font-semibold text-center text-pink-400 mb-4">
           Scan Room QR
         </h2>
         <div id="qr-reader"  />
-        <p className="text-xs text-gray-500 mt-4 text-center">
+        <p className="text-xs text-black mt-4 text-center">
           Allow camera access to scan QR
         </p>
       </div>

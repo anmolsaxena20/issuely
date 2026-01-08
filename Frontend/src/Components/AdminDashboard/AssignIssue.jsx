@@ -93,7 +93,7 @@ export default function AssignIssuesPage() {
     };
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-indigo-600 to-purple-600 p-6">
+        <div className="min-h-screen bg-linear-to-b from-[#011119] via-[#0f2a2f] to-[#0e6f7a]  p-6">
             <div className="flex mb-6 border p-4 rounded-lg bg-fuchsia-800">
                 <h1 className="text-3xl font-bold text-white ">
                     Assign Issue

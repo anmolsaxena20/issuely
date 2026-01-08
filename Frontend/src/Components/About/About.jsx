@@ -3,7 +3,7 @@ import {  Target, Eye, Users } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen w-screen bg-linear-to-br from-cyan-400 via-purple-500 to-pink-500 text-white overflow-y-auto">
+    <div className="min-h-screen w-screen bg-linear-to-b from-[#011119] via-[#0f2a2f] to-[#0e6f7a] text-green-300 overflow-y-auto">
       {/* Header */}
       <header className="px-10 py-8">
         <h1 className="text-3xl font-bold">About MNNIT ALLAHBAD</h1>
@@ -87,8 +87,8 @@ function InfoCard({ icon, title, desc }) {
 function ValueCard({ title, desc }) {
   return (
     <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 text-center">
-      <h3 className="font-semibold text-lg mb-2">{title}</h3>
-      <p className="text-sm text-white/90">{desc}</p>
+      <h3 className="font-semibold text-lg mb-2 ">{title}</h3>
+      <p className="text-sm text-white/80">{desc}</p>
     </div>
   );
 }
@@ -97,8 +97,8 @@ function LeaderCard({ name, role }) {
   return (
     <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 text-center">
       <Users className="mx-auto mb-3" />
-      <h3 className="font-semibold">{name}</h3>
-      <p className="text-sm text-white/80">{role}</p>
+      <h3 className="font-semibold text-amber-400">{name}</h3>
+      <p className="text-sm  text-pink-700">{role}</p>
     </div>
   );
 }

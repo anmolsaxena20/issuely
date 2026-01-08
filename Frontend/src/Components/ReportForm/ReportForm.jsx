@@ -62,21 +62,23 @@ export default function ReportIssue() {
 
 
   return (
+    <div className="min-h-screen w-screen flex items-center p-6  justify-center  bg-linear-to-b from-[#011119] via-[#0f2a2f] to-[#0e6f7a] ">
     <form
       onSubmit={handleSubmit}
-      className="m-4 max-w-lg mx-auto bg-linear-to-br from-cyan-400 via-purple-500 to-pink-500 backdrop-blur-md p-6 rounded-2xl"
+       className="bg-[#15979711] w-full h-full flex flex-col justify-center  max-w-4xl rounded-2xl shadow-2xl overflow-hidden"
     >
-      <h2 className="text-xl font-semibold mb-4">Report an Issue
+      <h2 className="text-xl text-pink-400 flex justify-center font-semibold m-4">Report an Issue
+      <ScanQrCode onClick={()=>navigate("/qrscanner")} className="ml-50 cursor-pointer"/>
       </h2>
-      <Link to="/qrscanner"> <ScanQrCode className="flex justify-between w-full ml-50"/></Link>
+    
       {/* personal detail optional */}
       <input
         type="text"
         name="name"
-        placeholder="Your name(Optional)"
+        placeholder="Enter Your name(Optional)"
         value={form.name}
         onChange={handleChange}
-        className="w-full p-2 mb-3 rounded outline-none"
+        className="w-full   p-2 mb-3 text-amber-300 rounded outline-none"
       />
 
       {/* Issue Type */}
@@ -85,14 +87,14 @@ export default function ReportIssue() {
         value={form.issueType}
         onChange={handleChange}
         required
-        className="w-full p-2 mb-3 rounded outline-none "
+        className="w-full p-2 mb-3 rounded outline-none text-amber-300"
       >
-        <option value="" className="bg-blue-400">Select Issue Type</option>
-        <option value="infrastructure" className="bg-blue-400 ">Infrastructure</option>
-        <option value="hostel" className="bg-blue-400">Hostel</option>
-        <option value="academic" className="bg-blue-400">Academic</option>
-        <option value="safety" className="bg-blue-400">Safety</option>
-        <option value="other" className="bg-blue-400">Other</option>
+        <option value="" className="bg-gray-600">Select Issue Type</option>
+        <option value="infrastructure" className="bg-gray-600 ">Infrastructure</option>
+        <option value="hostel" className="bg-gray-600">Hostel</option>
+        <option value="academic" className="bg-gray-600">Academic</option>
+        <option value="safety" className="bg-gray-600">Safety</option>
+        <option value="other" className="bg-gray-600">Other</option>
       </select>
 
       {/* Description */}
@@ -102,7 +104,7 @@ export default function ReportIssue() {
         value={form.description}
         onChange={handleChange}
         required
-        className="w-full p-2 mb-3 rounded outline-none"
+        className="w-full p-2 mb-3 rounded outline-none text-green-600"
         rows="4"
       />
 
@@ -114,7 +116,7 @@ export default function ReportIssue() {
         value={location ||form.location}
         onChange={handleChange}
         required
-        className="w-full p-2 mb-3 rounded outline-none"
+        className="w-full p-2 mb-3 rounded outline-none text-amber-300"
       />
 
       {/* Urgency */}
@@ -122,12 +124,12 @@ export default function ReportIssue() {
         name="urgency"
         value={form.urgency}
         onChange={handleChange}
-        className="w-full p-2 mb-3 rounded outline-none"
+        className="w-full p-2 mb-3 rounded outline-none text-amber-300"
       >
-        <option value="" className="bg-blue-400">Select Urgency</option>
-        <option value="low" className="bg-blue-400">Low</option>
-        <option value="medium" className="bg-blue-400">Medium</option>
-        <option value="high" className="bg-blue-400">High</option>
+        <option value="" className="bg-gray-600">Select Urgency</option>
+        <option value="low" className="bg-gray-600">Low</option>
+        <option value="medium" className="bg-gray-600">Medium</option>
+        <option value="high" className="bg-gray-600">High</option>
       </select>
 
       {/* Optional Contact */}
@@ -137,24 +139,25 @@ export default function ReportIssue() {
         placeholder="Contact info (optional)"
         value={form.contact}
         onChange={handleChange}
-        className="w-full p-2 mb-4 rounded outline-none"
+        className="w-full p-2 mb-4 rounded outline-none text-amber-300"
       />
 
       {/* file upload */}
 
-      <label className="mr-45" >upload a picture related to your issue:</label>
+      <label className="ml-2 text-amber-300" >upload a picture related to your issue:</label>
       <input
         type="file"
         accept="image/*,video/*"
         onChange={(e) => setFile(e.target.files[0])}
-        className="w-full my-[0.4rem] mx-0 text-sm mb-4 ml-4 "
+        className="w-full my-[0.4rem] mx-0 scale-100 text-sm mb-4 ml-4  text-pink-400 cursor-pointer"
       />
 
 
-      <button className="w-full py-2 bg-purple-600 text-white rounded cursor-pointer hover:bg-purple-700">
+      <button className=" py-2 bg-linear-to-b from-pink-400  to-violet-400 hover:scale-90 rounded-xl text-black  cursor-pointer hover:bg-purple-700 ">
         Submit Report
       </button>
     </form>
+    </div>
   );
 }
 

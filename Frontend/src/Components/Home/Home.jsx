@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen w-screen  bg-linear-to-br from-cyan-400 via-purple-500 to-pink-500 text-white ">
+    <div className="min-h-screen w-screen  bg-linear-to-b from-[#186a93] via-[#0f2a2f] to-[#0e6f7a] text-white ">
       {/* Hero Section */}
       <section className="flex flex-col items-center text-center  px-6">
         <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">
@@ -14,7 +14,7 @@ export default function HomePage() {
           ABC College is committed to academic excellence, innovation, and
           holistic development of students.
         </p>
-        <button className="mt-8 px-8 py-3 rounded-full bg-white text-purple-600 font-semibold hover:scale-105 transition">
+        <button className="mt-8 px-8 py-3 rounded-full bg-blue-400 text-purple-600 font-semibold hover:scale-105 transition">
           Explore Programs
         </button>
       </section>

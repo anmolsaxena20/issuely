@@ -24,7 +24,7 @@ export default function Logout() {
     return (
         <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-linear-to-t from--100  to-pink-900  hover:bg-fuchsia-400 hover:rounded-2xl rounded   cursor-pointer"
+            className="px-4 py-2 bg-linear-to-br from-fuchsia-400 to bg-pink-800  hover:rounded-2xl hover:bg-pink-900  rounded   cursor-pointer"
         >
             Logout
         </button>

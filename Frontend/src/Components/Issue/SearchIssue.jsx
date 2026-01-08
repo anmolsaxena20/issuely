@@ -69,9 +69,7 @@ export default function IssueSearch() {
     if (!query) return;
     setReportId(query);
     setQuery("");
-    console.log("reportId",query)
     await fetchIssue();
-    console.log("issues",issues);
     setIsSearch(true);
   };
     const fetchIssue  = async()=>{
@@ -91,14 +89,13 @@ export default function IssueSearch() {
         throw new Error(`Error ${res.status}: ${res.statusText}`);
       }
       const data  = await res.json();
-      console.log("fetched issues",data);
       setIssues(data);
     } catch (error) {
       console.log("failed to fetch issue",error);
     }
     }
   return (
-    <div className="p-6 h-fit w-screen  bg-linear-to-br from-cyan-400 via-purple-500 to-pink-500 text-white">
+    <div className="p-6 h-fit w-screen  bg-linear-to-b from-[#011119] via-[#0f2a2f] to-[#0e6f7a] text-green-500">
       <div className="flex gap-2 mb-4">
         <input
           value={query}
@@ -108,7 +105,7 @@ export default function IssueSearch() {
         />
         <button
           onClick={handleSearch}
-          className="bg-blue-600 text-white px-4 rounded"
+          className="bg-pink-600 rounded-lg hover:scale-90 cursor-pointer text-black font-semibold  px-4 "
         >
           Search
         </button>
