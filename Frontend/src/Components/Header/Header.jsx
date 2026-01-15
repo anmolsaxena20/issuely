@@ -21,7 +21,9 @@ function Header() {
           <Link to ="/report" className="cursor-pointer hover:underline">Issue </Link>
           <Link to="/issuesearch" className="cursor-pointer hover:underline">Issue Status</Link>
           <Link to="/contact" className="cursor-pointer hover:underline  hidden md:block">Contact</Link>
-          <Link to="" className="cursor-pointer hover:underline hidden md:block"><NotificationBell/></Link>
+          { (role=="lead" && isLogin) &&
+          <Link to="/request" className="cursor-pointer hover:underline hidden md:block"><button>🔔</button></Link>
+          }
           {
             (role == 'staff' && isLogin) &&
             <Link to="/staff/issue">🧑‍🔧 My Assigned Issues</Link>

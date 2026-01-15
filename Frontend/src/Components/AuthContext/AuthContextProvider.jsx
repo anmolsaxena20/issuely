@@ -17,6 +17,7 @@ export const AuthContextProvider = ({ children }) => {
         if (!res.ok) throw new Error("Not logged in");
 
         const data = await res.json();
+        console.log("data" ,data)
         localStorage.setItem("token", data.accessToken);
         setUser(data.user);
         setRole(data.user.role)
@@ -31,7 +32,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLogin, setIsLogin, role, setRole, user, setUser }}>
+    <AuthContext.Provider value={{ isLogin, setIsLogin, role, setRole, user, setUser ,token:localStorage.getItem("token")}}>
       {children}
     </AuthContext.Provider >
   )

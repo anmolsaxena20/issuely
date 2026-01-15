@@ -4,6 +4,8 @@ import {Fullscreen, GithubIcon} from "lucide-react"
 import useAuth from "../AuthContext/AuthContextProvider"
 import { useNavigate } from "react-router-dom";
 import loginImage from "./loginImage.png"
+import useSocket from "../../Context/SocketContext";
+import { toast,Toaster } from "react-hot-toast";
 
 export default function Login() {
   const [loginDetail,setLoginDetail] = useState({
@@ -12,6 +14,7 @@ export default function Login() {
     password:""
   })
   const navigate = useNavigate();
+  const socket = useSocket();
 
  const {isLogin,setIsLogin,role,setRole,setUser} = useAuth();
   const onChangeDetail = (e)=>{
@@ -43,8 +46,9 @@ export default function Login() {
       setIsLogin(true);
       setRole(data.role)  // res kaise aata hai us basis pe update kar denge
       navigate("/");
+      toast.success("Login successfull",{duration:10000,position:"top-right"})
     }else{
-      alert("login failed")
+      toast.error("login failed")
     }
     } catch (error) {
       console.log("error in login",error);
@@ -59,6 +63,7 @@ export default function Login() {
         {/* Title */}
         <div className="p-8 ">
         <h2 className="text-2xl font-bold text-center mb-8 text-blue-400">Login</h2>
+        <Toaster position="top-right" reverseOrder={false} />     
          
 
         {/* Username */}
@@ -152,6 +157,7 @@ export default function Login() {
         <img src={loginImage} alt="" className="object-cover w-full h-full"/>
        </div>
        </div>
+  
       
       </div>
    
