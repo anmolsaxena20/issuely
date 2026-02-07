@@ -1,3 +1,7 @@
-venv\
+# Python
+**/venv/
+**/__pycache__/
+*.pyc
+
+# Env
 .env
-app/__pycache__
