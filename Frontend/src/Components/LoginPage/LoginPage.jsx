@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router";
 import {Fullscreen, GithubIcon} from "lucide-react"
 import useAuth from "../AuthContext/AuthContextProvider"
 import { useNavigate } from "react-router-dom";
-import loginImage from "./loginImage.png"
+import loginImage from "./loginimage.png"
 import useSocket from "../../Context/SocketContext";
 import { toast,Toaster } from "react-hot-toast";
 import { API_BASE_URL, apiUrl } from "../../config/api.js";
