@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router";
 import { GithubIcon, CircleUserRound } from "lucide-react"
-import loginImage from "../LoginPage/loginImage.png"
+import loginImage from "../LoginPage/loginimage.png"
 import { API_BASE_URL, apiUrl } from "../../config/api.js";
 export default function Signup() {
   const [signupDetail, setSignupDetail] = useState({
