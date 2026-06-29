@@ -24,6 +24,8 @@ import "./config/passport.js";
 
 const app = express();
 
+app.set("trust proxy", true);
+
 /* ---------- MIDDLEWARES ---------- */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,7 +36,7 @@ app.use(
   cors({
     origin: process.env.CORS_ORIGIN.split(",") || true,
     credentials: true,
-  })
+  }),
 );
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 app.use(limiter);
