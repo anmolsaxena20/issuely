@@ -13,17 +13,23 @@ export const getAllStaff = async (req, res) => {
 export const previousRequests = async (req, res) => {
   try {
     const { limit = 10, before } = req.query;
-    const requests = await RoleRequest.find({
-      createdAt: { $lt: new Date(before) },
-    })
+
+    const query = {};
+    if (before) {
+      query.createdAt = { $lt: new Date(before) };
+    }
+
+    const requests = await RoleRequest.find(query)
       .sort({ createdAt: -1 })
       .limit(Number(limit));
-    res.json({ requests: requests });
+
+    res.json({ requests });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to fetch previous requests" });
   }
 };
+
 export const acceptSignup = async (req, res) => {
   try {
     const { id } = req.body;

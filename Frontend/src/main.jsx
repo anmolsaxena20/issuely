@@ -19,9 +19,11 @@ import AssignIssuesPage from './Components/AdminDashboard/AssignIssue'
 import ChatPage from "./Components/ChatFeature/ChatPage"
 import { SocketProvider } from './Context/SocketContext'
 import LeadRequestsPage from './Components/AdminDashboard/ApproveRequest'
+import Wait from './Components/wait/wait'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
+      <Route path='/wait' element={<Wait />} />
       <Route path='' element={<HomePage />} />
       <Route path='/login' element={<LoginPage/>} />
       <Route path='/signup' element={<SignupPage />} />
@@ -37,7 +39,7 @@ const router = createBrowserRouter(
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/assign' element={<AssignIssuesPage />} />
         <Route path="/chat" element={<ChatPage />} />
-        <Route path="/issues/:issueId/chat" element={<SocketProvider><ChatPage /></SocketProvider>} />
+        <Route path="/issues/:issueId/chat" element={<ChatPage />} />
         <Route path="/request" element={<LeadRequestsPage/>}/>
       </Route>
     </Route>

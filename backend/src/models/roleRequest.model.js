@@ -9,6 +9,7 @@ const roleRequestSchema = new mongoose.Schema(
     request: {
       type: String,
       required: true,
+      default: "STAFF_SIGNUP",
     },
   },
   { timestamps: true }
