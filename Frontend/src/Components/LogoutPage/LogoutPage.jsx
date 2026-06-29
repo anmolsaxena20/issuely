@@ -1,13 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../AuthContext/AuthContextProvider"
+import { apiUrl } from "../../config/api.js";
 
 export default function Logout() {
     const navigate = useNavigate();
     const{setIsLogin} = useAuth();
     const handleLogout = async () => {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5000/auth/logout", {
+        const res = await fetch(apiUrl("/auth/logout"), {
             method: "POST",
             credentials: "include",
             headers: {

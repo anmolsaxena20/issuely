@@ -3,6 +3,7 @@ import useAuth from "../AuthContext/AuthContextProvider";
 import FeedbackForm from "./FeedbackForm";
 import IssueChatPage from "../ChatFeature/ChatPage";
 import { Link } from "react-router-dom";
+import { apiUrl } from "../../config/api.js";
 
 
 
@@ -20,7 +21,7 @@ export default function IssueCard({ issue, setIssues, staff }) {
           try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch(`http://localhost:5000/issues/admin/update`, {
+            const response = await fetch(apiUrl("/issues/admin/update"), {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

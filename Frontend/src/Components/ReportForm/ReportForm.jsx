@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSearchParams ,useNavigate} from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ScanQrCode } from "lucide-react";
+import { apiUrl } from "../../config/api.js";
 
 
 export default function ReportIssue() {
@@ -48,7 +49,7 @@ export default function ReportIssue() {
       formData.append("picture", file);
     }
     const token = localStorage.getItem('token');
-    const res = await fetch("http://localhost:5000/issues/student", {
+    const res = await fetch(apiUrl("/issues/student"), {
       method: "POST",
       headers: { "Authorization": `Bearer ${token}`},
       body: formData,

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiUrl } from "../../config/api.js";
 
 export default function FeedbackForm({ issueId, onSuccess }) {
   const [rating, setRating] = useState(0);
@@ -24,7 +25,7 @@ export default function FeedbackForm({ issueId, onSuccess }) {
     try {
       setLoading(true);
 
-      const response = await fetch("http://localhost:5000/feedback", {
+      const response = await fetch(apiUrl("/feedback"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

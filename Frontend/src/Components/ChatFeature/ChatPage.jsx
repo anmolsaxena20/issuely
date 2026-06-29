@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import useSocket from "../../Context/SocketContext";
 import useAuth from "../AuthContext/AuthContextProvider";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { apiUrl } from "../../config/api.js";
 export default function IssueChatPage() {
     const { issueId } = useParams();
     const socket = useSocket();
@@ -74,8 +75,8 @@ export default function IssueChatPage() {
         const token = localStorage.getItem("token");
         if (!token) return
         const url = cursor
-            ? `http://localhost:5000/issues/messages/${issueId}?limit=10&before=${cursor}`
-            : `http://localhost:5000/issues/messages/${issueId}?limit=10`;
+            ? `${apiUrl(`/issues/messages/${issueId}`)}?limit=10&before=${cursor}`
+            : `${apiUrl(`/issues/messages/${issueId}`)}?limit=10`;
         const res = await fetch(url,
             {
                 method: "GET",

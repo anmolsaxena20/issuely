@@ -1,5 +1,6 @@
 import React, { useState ,useEffect} from "react";
 import { Link } from "react-router-dom";
+import { apiUrl } from "../../config/api.js";
 
 export default function AssignIssuesPage() {
     const [issues, setIssues] = useState([]);
@@ -21,7 +22,7 @@ export default function AssignIssuesPage() {
             const token = localStorage.getItem("token")
             if (!token) return;
             try {
-                const res = await fetch("http://localhost:5000/issues/lead/getall",
+                const res = await fetch(apiUrl("/issues/lead/getall"),
                     {
                         method: "GET",
                         headers: {
@@ -43,7 +44,7 @@ export default function AssignIssuesPage() {
         const fetchStaff = async () => {
             const token = localStorage.getItem("token");
             try {
-                const res = await fetch("http://localhost:5000/lead/getstaff",
+                const res = await fetch(apiUrl("/lead/getstaff"),
                     {
                         method: "GET",
                         headers: {
@@ -68,7 +69,7 @@ export default function AssignIssuesPage() {
         const token = localStorage.getItem("token");
 
         const res = await fetch(
-            `http://localhost:5000/issues/lead/assign`,
+            apiUrl("/issues/lead/assign"),
             {
                 method: "POST",
                 headers: {

@@ -10,6 +10,8 @@ import cloudinary from "../config/cloudinary.js";
 import streamifier from "streamifier";
 import "dotenv/config";
 import { getSocketInstance } from "../utils/socket.instance.js";
+
+const frontendUrl = process.env.FRONTEND_URL?.replace(/\/$/, "");
 export const refreshAccessToken = async (req, res) => {
   try {
     const token = req.cookies.refreshToken;
@@ -67,7 +69,7 @@ export const signup = async (req, res) => {
     const hashedPassword = await hashPassword(password);
     if (role === "staff" || role === "lead") {
       const existing = await RoleRequest.findOne({ email });
-      if (existing) return res.redirect("http://localhost:5173/wait");
+      if (existing) return res.redirect(`${frontendUrl}/wait`);
       const io = getSocketInstance();
       const data = JSON.stringify({
         name,
@@ -85,7 +87,7 @@ export const signup = async (req, res) => {
         department,
         contact,
       });
-      return res.redirect("http://localhost:5173/wait");
+      return res.redirect(`${frontendUrl}/wait`);
     }
     const user = await User.create({
       name,
@@ -135,7 +137,7 @@ export const update = async (req, res) => {
             (error, result) => {
               if (result) resolve(result);
               else reject(error);
-            }
+            },
           );
 
           streamifier.createReadStream(req.file.buffer).pipe(stream);
@@ -233,7 +235,7 @@ export const oauthSuccess = async (req, res) => {
     });
 
     // redirect back to frontend
-    res.redirect("http://localhost:5173/");
+    res.redirect(`${frontendUrl}/`);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "OAuth handling failed" });

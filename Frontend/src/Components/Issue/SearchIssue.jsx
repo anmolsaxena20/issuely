@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CommentIssue from "./CommentIssue";
 import IssueCard from "./IssueCard";
+import { apiUrl } from "../../config/api.js";
 
 const mockIssues = [
   {
@@ -76,7 +77,7 @@ export default function IssueSearch() {
     const token = localStorage.getItem("token");
     if(!token) return
     try {
-      const res = await fetch(`http://localhost:5000/issues/${String(query)}`,
+      const res = await fetch(apiUrl(`/issues/${String(query)}`),
         {
           method:"GET",
           headers:{

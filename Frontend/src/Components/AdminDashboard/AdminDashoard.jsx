@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AssignIssue from "./AssignIssue";
 import IssueCard from "../Issue/IssueCard";
+import { apiUrl } from "../../config/api.js";
 
 export default function AdminDashboard() {
     const [issues, setIssues] = useState([]);
@@ -17,7 +18,7 @@ export default function AdminDashboard() {
         const token = localStorage.getItem("token");
         if(!token) return
        try {
-         const res = await fetch("http://localhost:5000/issues/lead/getall",
+         const res = await fetch(apiUrl("/issues/lead/getall"),
            {
              method:"GET",
              headers:{
@@ -37,7 +38,7 @@ export default function AdminDashboard() {
         const token = localStorage.getItem("token");
         if(!token) return;
         try {
-          const res = await fetch("http://localhost:5000/lead/getstaff",
+          const res = await fetch(apiUrl("/lead/getstaff"),
             {
               method:"GET",
               headers:{

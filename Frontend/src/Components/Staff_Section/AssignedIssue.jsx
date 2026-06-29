@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../AuthContext/AuthContextProvider";
 import IssueCard,{StatusBadge} from "../Issue/IssueCard";
+import { apiUrl } from "../../config/api.js";
 
 export default function AssignedIssues() {
   const [issues, setIssues] = useState([]);
@@ -13,7 +14,7 @@ export default function AssignedIssues() {
       console.log("token",token);
       if(!token) return;
       try {
-      const res = await fetch(`http://localhost:5000/issues/staff/my`,
+      const res = await fetch(apiUrl("/issues/staff/my"),
         {
           method:"GET",
           headers:{

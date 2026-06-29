@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import loginImage from "./loginImage.png"
 import useSocket from "../../Context/SocketContext";
 import { toast,Toaster } from "react-hot-toast";
+import { API_BASE_URL, apiUrl } from "../../config/api.js";
 
 export default function Login() {
   const [loginDetail,setLoginDetail] = useState({
@@ -28,7 +29,7 @@ export default function Login() {
   const loginUser = async(e)=>{
     e.preventDefault();
     try {
-      const res  = await fetch("http://localhost:5000/auth/login",
+      const res  = await fetch(apiUrl("/auth/login"),
       {
         method:"POST",
         headers:{
@@ -129,7 +130,7 @@ export default function Login() {
 
         <div className="flex flex-col justify-center gap-4 mt-4">
           <button
-            onClick={() => window.location.href = "http://localhost:5000/auth/google"}
+            onClick={() => window.location.href = `${API_BASE_URL}/auth/google`}
             className="w-full border py-2 rounded flex items-center justify-center gap-2 hover:cursor-pointer hover:bg-pink-500 hover:rounded-2xl"
           >
             <img src="https://www.svgrepo.com/show/303108/google-icon-logo.svg" className="w-5 " />
@@ -137,7 +138,7 @@ export default function Login() {
           </button>
 
           <button
-            onClick={() => window.location.href = "http://localhost:5000/auth/github"}
+            onClick={() => window.location.href = `${API_BASE_URL}/auth/github`}
             className="w-full border py-2 rounded flex items-center justify-center gap-2 hover:cursor-pointer hover:bg-pink-500 hover:rounded-2xl "
           >
             <GithubIcon/>

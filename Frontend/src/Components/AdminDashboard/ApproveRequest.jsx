@@ -3,6 +3,7 @@ import useSocket from "../../Context/SocketContext";
 import {Toaster} from "react-hot-toast"
 import useAuth from "../AuthContext/AuthContextProvider";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { apiUrl } from "../../config/api.js";
 export default function LeadRequestsPage() {
     const socket = useSocket();
     const{user}  = useAuth();
@@ -13,7 +14,7 @@ export default function LeadRequestsPage() {
         try {
             const token = localStorage.getItem("token");
             if (!token) return;
-            const url = cursor ? `http://localhost:5000/lead/prevreqs?limit=10&before=${cursor}` : `http://localhost:5000/lead/prevreqs?limit=10`
+            const url = cursor ? `${apiUrl("/lead/prevreqs")}?limit=10&before=${cursor}` : `${apiUrl("/lead/prevreqs")}?limit=10`
             const res = await fetch(url,
                 {
                     method: "POST",
@@ -56,7 +57,7 @@ export default function LeadRequestsPage() {
         try {
             const token = localStorage.getItem("token");
             if (!token) return
-            const res = await fetch("http://localhost:5000/lead/accept",
+            const res = await fetch(apiUrl("/lead/accept"),
                 {
                     method: "POST",
                     headers: {
@@ -78,7 +79,7 @@ export default function LeadRequestsPage() {
         const token = localStorage.getItem("token");
         if (!token) return;
         try {
-            const res = await fetch("http://localhost:5000/lead/reject",
+            const res = await fetch(apiUrl("/lead/reject"),
                 {
                     method: "POST",
                     headers: {

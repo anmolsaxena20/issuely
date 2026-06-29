@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import useAuth from "../AuthContext/AuthContextProvider"
 import { Pencil } from "lucide-react";
+import { apiUrl } from "../../config/api.js";
 export default function ProfilePage() {
   const [profile, setProfile] = useState({
     name: "",
@@ -30,7 +31,7 @@ export default function ProfilePage() {
     const token = localStorage.getItem("token");
     if (!token) return;
     try {
-      const res = await fetch("http://localhost:5000/auth/update",
+      const res = await fetch(apiUrl("/auth/update"),
         {
           method: "POST",
           headers: {
@@ -73,7 +74,7 @@ export default function ProfilePage() {
     if (!token) return;
     const data = { id: user.id ? user.id : user._id, name: profile.name, email: profile.email, role: profile.role, contact: profile.contact, department: profile.department }
     try {
-      const res = await fetch("http://localhost:5000/auth/update",
+      const res = await fetch(apiUrl("/auth/update"),
         {
           method: "POST",
           headers: {
