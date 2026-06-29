@@ -14,7 +14,7 @@ export default function Signup() {
     contact: "",
     password: ""
   })
-  const [role, setRole] = useState("student");
+  
    const {isLogin,setIsLogin,role,setRole,setUser} = useAuth();
 
   const navigate = useNavigate();
