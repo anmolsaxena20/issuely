@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router";
 import { GithubIcon, CircleUserRound } from "lucide-react"
 import loginImage from "../LoginPage/loginimage.png"
+import useAuth from "../AuthContext/AuthContextProvider"
 import { API_BASE_URL, apiUrl } from "../../config/api.js";
 export default function Signup() {
   const [signupDetail, setSignupDetail] = useState({
@@ -14,6 +15,7 @@ export default function Signup() {
     password: ""
   })
   const [role, setRole] = useState("student");
+   const {isLogin,setIsLogin,role,setRole,setUser} = useAuth();
 
   const navigate = useNavigate();
   const onChangeDetail = (e) => {
@@ -36,8 +38,14 @@ export default function Signup() {
         }
       );
       const data = await res.json()
+      
       if (res.ok) {
-        navigate("/login")
+        localStorage.setItem("token",data.token);
+      setUser(data);
+      setIsLogin(true);
+      setRole(data.role)  
+      toast.success("Signup successfull",{duration:10000,position:"top-right"})
+      navigate("/");
       } else {
         alert('signup failed')
       }

@@ -97,8 +97,17 @@ export const signup = async (req, res) => {
       contact: contact,
       department: department,
     });
+     const details = {
+      id: user._id,
+      name: user.name,
+      role: user.role,
+      email: user.email,
+      contact: user.contact,
+      department: user.department,
+      picture: user.picture,
+    };
 
-    res.status(201).json({ message: "Signup successful" });
+    res.json({ token: accessToken, ...details });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Signup failed" });
